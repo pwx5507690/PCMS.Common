@@ -12,12 +12,8 @@
     </head>
     <body style="background-color: #f5f5f5">
         <div class="loading" style="display:none"><img src="img/loading.gif" alt="loading-img"></div>
-        <div id="top" class="clearfix">
-            <div class="applogo">
-                <a href="javascript:;" class="logo">PMCS</a>
-            </div>
-        </div>
-        <div class="content" style="margin-left: 0; margin-bottom: 40px;">
+       
+        <div class="content" style="margin-left: 0; margin-bottom: 40px;padding-top: 20px">
             <div class="page-header">
                 <h1 class="title">语言库</h1>
                 <ol class="breadcrumb">
