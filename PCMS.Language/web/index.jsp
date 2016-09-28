@@ -11,8 +11,7 @@
         <link href="css/root.css" rel="stylesheet">
     </head>
     <body style="background-color: #f5f5f5">
-        <div class="loading" style="display:none"><img src="img/loading.gif" alt="loading-img"></div>
-       
+        <div class="loading" id="loading"><img src="img/loading.gif" alt="loading-img"></div>   
         <div class="content" style="margin-left: 0; margin-bottom: 40px;padding-top: 20px">
             <div class="page-header">
                 <h1 class="title">语言库</h1>
@@ -35,25 +34,20 @@
                             <div class="panel-body">
                                 <form>
                                     <div class="form-group">
-                                        <label for="example3" class="form-label">语言</label>
-                                        <select type="text" class="form-control form-control-line" >
-                                            <option>
-                                                中文
-                                            </option>
-                                            <option>
-                                                英文
-                                            </option>
+                                        <label for="languageType" class="form-label">语言类型</label>
+                                        <select id="languageType" name="languageType" type="text" class="form-control form-control-line" >
+                                            
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="example3" class="form-label">名称</label>
-                                        <input type="text" class="form-control form-control-line" id="example3">
+                                        <label for="name" class="form-label">名称</label>
+                                        <input type="text" class="form-control form-control-line" name="name" id="name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="example4" class="form-label">值</label>
-                                        <input type="text" class="form-control form-control-line" id="example4">
+                                        <label for="value" class="form-label">值</label>
+                                        <input type="text" class="form-control form-control-line" id="value">
                                     </div>
-                                    <button type="submit" class="btn btn-default">提交</button>
+                                    <button type="button" id="sub" class="btn btn-default">提交</button>
                                 </form>
                             </div>
                         </div>
@@ -78,7 +72,7 @@
                                             <td>值</td>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="langugeContent">
                                         <tr>
                                             <td class="text-center"><div class="checkbox margin-t-0"><input id="checkbox1" type="checkbox"><label for="checkbox1"></label></div></td>
                                             <td># <b>9652</b></td>
@@ -103,6 +97,6 @@
         </div>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script src="js/bootstrap/bootstrap.min.js"></script>
-
+        <script src="js/index.js" type="text/javascript"></script>
     </body>
 </html>
