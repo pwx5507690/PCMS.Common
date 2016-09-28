@@ -31,19 +31,38 @@
     };
 
     var _submit = function () {
+
         var data = {
-            name: _elmStr.name.value,
-            value: _elmStr.value.value,
+            name: _elmTarget.name.val(),
+            value: _elmTarget.value.val(),
             type: _language
         };
-        jQuery.post(_server, data).done(function () {
-
+        if (!data.name) {
+            _elmTarget.name.css("border-color","red");
+            return;
+        }
+        if (!data.value) {
+            _elmTarget.value.css("border-color","red");
+            return;
+        }
+        var method = _containsKeyBylanguageData(data.name) ? "update" : "add";
+        _showLoading();
+        _elmTarget.value.css("border-color","#BDC4C9");
+        _elmTarget.name.css("border-color","#BDC4C9");
+        jQuery.post(_server + "?method=" + method + "&type=" + _language, data).done(function (result) {
+            console.log(result);
+            _closeLoading();
+        }).error(function () {
+            _closeLoading();
         });
     };
 
-    var _containsKeyBylanguageData = function () {
+    var _containsKeyBylanguageData = function (name) {
         for (var i = 0; i < _cache["languageData"]; i++) {
-            var item =  _cache["languageData"][i];
+            var item = _cache["languageData"][i];
+            if (item["name"] === name) {
+                return true;
+            }
         }
         return false;
     };
@@ -61,7 +80,7 @@
     };
 
     var _setLanguageType = function () {
-        _language = "zh_cn";
+        _language = "zh";
     };
 
     var _createLanguageList = function () {
@@ -72,7 +91,7 @@
         if (data === undefined || data.length === 0) {
             return;
         }
-
+        
         var temp = [];
         for (var i = 0; i < data.length; i++) {
             var item = data[i];
@@ -83,17 +102,19 @@
 
     var _event = function () {
         jQuery(document)
-                .on("body", "#sub", _submit)
-                .on("body", "#languageType", function () {
+                .on("click", "#sub", _submit)
+                .on("click", "#languageType", function () {
                     _language = $(this).val();
                 });
     };
 
     var _initLanguageList = function () {
-        jQuery.get(_server + "?method=init&type=zh").done(function (result) {
-            _cache = JSON.parse(result);
-            _createLanguageType(_cache["language"]);
-            _createLanguageList(_cache["languageData"]);
+        jQuery.get(_server + "?method=initLanguge&type=" + _language).done(function (result) {
+            if (result) {
+                _cache = JSON.parse(result);
+                _createLanguageType(_cache["language"]);
+                _createLanguageList(_cache["languageData"]);
+            }
             _closeLoading();
         }).error(function () {
             _closeLoading();

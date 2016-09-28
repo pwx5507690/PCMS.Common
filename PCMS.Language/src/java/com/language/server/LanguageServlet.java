@@ -26,16 +26,16 @@ import org.apache.commons.logging.Log;
 public class LanguageServlet extends HttpServlet {
 
     protected final String _server;
-    
+
     protected final Log _log;
-    
+
     public LanguageServlet() {
-        this._server = "http://localhost:8080/PCMS/Language/init";
-        _log =  LogHelper.getLog(this.getClass());
+        this._server = "http://localhost:8080/PCMS/Language/";
+        _log = LogHelper.getLog(this.getClass());
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, String content)
-            throws IOException,ServletException {
+            throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println(content);
@@ -44,9 +44,10 @@ public class LanguageServlet extends HttpServlet {
 
     public void initLanguge(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String type = request.getParameter("type");
-        String url = String.format("%s/%s", this._server, type);
+        String url = String.format("%s/init/%s", this._server, type);
 
         String result = HttpHelper.httpGetForString(url);
+        _log.info(result);
         processRequest(request, response, result);
     }
 
@@ -57,22 +58,23 @@ public class LanguageServlet extends HttpServlet {
         return param;
     }
 
-     protected void update(HttpServletRequest request, HttpServletResponse response) throws IOException , ServletException {
-        String url = String.format("%s/%s/%s", this._server, "update", request.getParameter("type"));
+    protected void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String url = String.format("%s/update/%s", this._server, request.getParameter("type"));
         String result = HttpHelper.httpPostForString(url, getParam(request));
         processRequest(request, response, result);
     }
-    
-    protected void add(HttpServletRequest request, HttpServletResponse response) throws IOException , ServletException {
-        String url = String.format("%s/%s/%s", this._server, "add", request.getParameter("type"));
+
+    protected void add(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String url = String.format("%s/add/%s", this._server,  request.getParameter("type"));
         String result = HttpHelper.httpPostForString(url, getParam(request));
+        _log.info(result);
         processRequest(request, response, result);
     }
 
     protected void call(HttpServletRequest request, HttpServletResponse response) {
         String method = request.getParameter("method");
         try {
-            this.getClass().getDeclaredMethod("initLanguge", HttpServletRequest.class, HttpServletResponse.class).invoke(this, request, response);
+            this.getClass().getDeclaredMethod(method, HttpServletRequest.class, HttpServletResponse.class).invoke(this, request, response);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             _log.error(ex.getMessage());
         }
