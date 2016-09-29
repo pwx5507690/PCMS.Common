@@ -74,7 +74,8 @@
                                     </thead>
                                     <tbody id="langugeContent">
                                         <tr>
-                                            <td class="text-center"><div class="checkbox margin-t-0"><input id="checkbox1" type="checkbox"><label for="checkbox1"></label></div></td>
+                                            <td class="text-center"><div class="checkbox margin-t-0">
+                                                    <input id="checkbox1" type="checkbox"><label for="checkbox1"></label></div></td>
                                             <td># <b>9652</b></td>
                                             <td>Kode Gaming Laptop</td>
                                         </tr>

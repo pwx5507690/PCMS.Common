@@ -49,6 +49,7 @@
         _showLoading();
         _elmTarget.value.css("border-color","#BDC4C9");
         _elmTarget.name.css("border-color","#BDC4C9");
+        console.log(_server + "?method=" + method + "&type=" + _language);
         jQuery.post(_server + "?method=" + method + "&type=" + _language, data).done(function (result) {
             console.log(result);
             _closeLoading();
@@ -83,10 +84,20 @@
         _language = "zh";
     };
 
-    var _createLanguageList = function () {
-        _elmTarget.langugeContent.html();
+    var _createLanguageList = function (data) {
+        if (data === undefined || data.length === 0) {
+            return;
+        }
+        var temp = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            temp.push('<tr><td class="text-center"><div class="checkbox margin-t-0">');
+            temp.push('<input data-id="',item["name"],'" type="checkbox"><label for="',item["name"],'"></label></div></td>');
+            temp.push('<td>',item["name"],'</td><td>',item["value"],'</td></tr>');
+        }
+        _elmTarget.langugeContent.html(temp.join(''));
     };
-
+    
     var _createLanguageType = function (data) {
         if (data === undefined || data.length === 0) {
             return;

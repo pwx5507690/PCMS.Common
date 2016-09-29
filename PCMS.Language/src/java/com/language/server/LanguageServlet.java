@@ -17,7 +17,6 @@ import com.pcms.http.helper.HttpHelper;
 import java.lang.reflect.InvocationTargetException;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
-
 /**
  *
  * @author wx.pan
@@ -41,13 +40,21 @@ public class LanguageServlet extends HttpServlet {
             out.println(content);
         }
     }
-
+    
+    protected void queryLanguage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        String type = request.getParameter("type");
+        String current = request.getParameter("current");
+        String pageSize = request.getParameter("pageSize");
+        String searchName = request.getParameter("searchName");
+        String url = String.format("%s/get/%s/current/%s/pagesize/%s", this._server, type,current,pageSize);
+        String result = HttpHelper.httpGetForString(url);
+        processRequest(request, response, result);
+    }
+    
     public void initLanguge(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String type = request.getParameter("type");
         String url = String.format("%s/init/%s", this._server, type);
-
         String result = HttpHelper.httpGetForString(url);
-        _log.info(result);
         processRequest(request, response, result);
     }
 
@@ -67,7 +74,6 @@ public class LanguageServlet extends HttpServlet {
     protected void add(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String url = String.format("%s/add/%s", this._server,  request.getParameter("type"));
         String result = HttpHelper.httpPostForString(url, getParam(request));
-        _log.info(result);
         processRequest(request, response, result);
     }
 
