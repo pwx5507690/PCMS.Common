@@ -26,6 +26,7 @@ public class HttpHelper {
         try {
             url = URLDecoder.decode(url, "UTF-8");
             HttpPost method = new HttpPost(url);
+            System.out.println(url);
             if (null != jsonParam) {
                 StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");
                 entity.setContentEncoding("UTF-8");
@@ -33,7 +34,7 @@ public class HttpHelper {
                 method.setEntity(entity);
             }
             HttpResponse result = client.execute(method);
-
+            System.out.println(result.getStatusLine().getStatusCode());
             if (result.getStatusLine().getStatusCode() == 200) {
                 String str = StringUtils.EMPTY;
                 try {
@@ -43,9 +44,11 @@ public class HttpHelper {
                     }
                     jsonResult = JSONObject.fromObject(str);
                 } catch (IOException | ParseException e) {
+                     System.out.println(e.getMessage());
                 }
             }
         } catch (IOException e) {
+             System.out.println(e.getMessage());
         }
         return jsonResult;
     }
@@ -67,7 +70,7 @@ public class HttpHelper {
 
             }
         } catch (IOException e) {
-
+              System.out.println(e.getMessage());
         }
         return jsonResult;
     }

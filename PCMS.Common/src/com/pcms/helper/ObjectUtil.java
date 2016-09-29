@@ -7,10 +7,12 @@ package com.pcms.helper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 import org.apache.commons.logging.Log;
 
 /**
@@ -26,6 +28,7 @@ public class ObjectUtil {
     }
 
     public static <T> T jsonToObject(String json, Class<T> t) {
+
         JSONObject jsonObject = JSONObject.fromObject(json);
         return (T) JSONObject.toBean(jsonObject, t);
     }
@@ -51,7 +54,7 @@ public class ObjectUtil {
             bais = new ByteArrayInputStream(bytes);
             ObjectInputStream ois = new ObjectInputStream(bais);
             return ois.readObject();
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException e) {
             LOG.error(e.getMessage());
         }
         return null;
